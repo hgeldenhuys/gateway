@@ -25,8 +25,11 @@ export class ClientGateway implements OnGatewayConnection {
 	constructor(private readonly commandBus: CommandBus) {}
 	@SubscribeMessage(ServerEvents.InputChanged)
 	async handleConnection(@ConnectedSocket() client: Socket) {
-		clients[client.id] = client
-		return await this.commandBus.execute(new ConnectedCommand({ id: client.id, as: 'client' }))
+		console.log('handleConnection')
+		if (!clients[client.id]) {
+			clients[client.id] = client
+			return await this.commandBus.execute(new ConnectedCommand({ id: client.id, as: 'client' }))
+		}
 	}
 
 	async inputChanged(@ConnectedSocket() client: Socket, inputChangedEvent: InputChangedEvent) {

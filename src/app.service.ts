@@ -12,7 +12,7 @@ const matched: Array<MatchedEvent> = []
 export class AppService {
 	constructor(private readonly commandBus: CommandBus, private readonly server: ServerGateway) {}
 	async connect(connectedEvent: ConnectedEvent) {
-		console.log(connectedEvent)
+		console.log('app.connected', connectedEvent)
 		if (connectedEvent.as === 'client') clients.push(connectedEvent.id)
 		else servers.push(connectedEvent.id)
 		if (clients.length && servers.length) {
