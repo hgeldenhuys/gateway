@@ -3,6 +3,7 @@ import { ConnectedEvent, MatchedEvent } from './events'
 import { CommandBus } from '@nestjs/cqrs'
 import { MatchedCommand } from './commands/matched-command'
 import { ServerGateway } from './server.gateway'
+import { ClientGateway } from './client.gateway'
 
 const clients: Array<string> = []
 const servers: Array<string> = []
@@ -10,7 +11,11 @@ const matched: Array<MatchedEvent> = []
 
 @Injectable()
 export class AppService {
-	constructor(private readonly commandBus: CommandBus, private readonly server: ServerGateway) {}
+	constructor(
+		private readonly commandBus: CommandBus,
+		private readonly server: ServerGateway,
+		private readonly client: ClientGateway
+	) {}
 	async connect(connectedEvent: ConnectedEvent) {
 		console.log('app.connected', connectedEvent)
 		if (connectedEvent.as === 'client') clients.push(connectedEvent.id)
@@ -20,6 +25,7 @@ export class AppService {
 			const server = servers.pop()
 			matched.push({ client, server })
 			this.server.join(server, client)
+			this.client.join(server, client)
 			return await this.commandBus.execute(new MatchedCommand({ client, server }))
 		}
 	}

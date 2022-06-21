@@ -1,6 +1,7 @@
 import { InputChangedEvent, ServerEvents } from './events'
 import {
 	ConnectedSocket,
+	MessageBody,
 	OnGatewayConnection,
 	SubscribeMessage,
 	WebSocketGateway,
@@ -23,20 +24,21 @@ const clients: Record<string, Socket> = {}
 export class ClientGateway implements OnGatewayConnection {
 	@WebSocketServer() server: Server
 	constructor(private readonly commandBus: CommandBus) {}
-	@SubscribeMessage(ServerEvents.InputChanged)
 	async handleConnection(@ConnectedSocket() client: Socket) {
-		console.log('handleConnection')
 		if (!clients[client.id]) {
+			console.log('handleConnection')
 			clients[client.id] = client
 			return await this.commandBus.execute(new ConnectedCommand({ id: client.id, as: 'client' }))
 		}
 	}
 
-	async inputChanged(@ConnectedSocket() client: Socket, inputChangedEvent: InputChangedEvent) {
-		return await this.commandBus.execute(new InputChangeCommand(inputChangedEvent))
+	@SubscribeMessage(ServerEvents.InputChanged)
+	async inputChanged(@ConnectedSocket() client: Socket, @MessageBody() inputChangedEvent: InputChangedEvent) {
+		console.log({ inputChangedEvent })
+		return await this.commandBus.execute(new InputChangeCommand(inputChangedEvent, client.id))
 	}
 
 	join(server: string, client: string) {
-		clients[client].join(`${server}-${client}`)
+		clients[client].join(client)
 	}
 }
