@@ -10,9 +10,16 @@ import { ConnectedCommandHandler } from './command-handlers/connected-command-ha
 import { MatchedCommand } from './commands/matched-command'
 import { InputChangeCommandHandler } from './command-handlers/input-change-command-handler'
 import { MatchedCommandHandler } from './command-handlers/matched-command-handler'
+import { DisconnectedCommand } from './commands/disconnected-command'
+import { DisconnectedCommandHandler } from './command-handlers/disconnected-command-handler'
 
-const commands = [ConnectedCommand, InputChangeCommand, MatchedCommand]
-const commandHandlers = [ConnectedCommandHandler, MatchedCommandHandler, InputChangeCommandHandler]
+const commands = [ConnectedCommand, InputChangeCommand, MatchedCommand, DisconnectedCommand]
+const commandHandlers = [
+	ConnectedCommandHandler,
+	MatchedCommandHandler,
+	InputChangeCommandHandler,
+	DisconnectedCommandHandler,
+]
 
 @Module({
 	imports: [CqrsModule],

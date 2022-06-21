@@ -10,6 +10,7 @@ import {
 	ConnectedSocket,
 	MessageBody,
 	OnGatewayConnection,
+	OnGatewayDisconnect,
 	SubscribeMessage,
 	WebSocketGateway,
 	WebSocketServer,
@@ -17,6 +18,7 @@ import {
 import { Server, Socket } from 'socket.io'
 import { ConnectedCommand } from './commands/connected.command'
 import { CommandBus } from '@nestjs/cqrs'
+import { DisconnectedCommand } from './commands/disconnected-command'
 
 type Room = string
 
@@ -30,13 +32,20 @@ const clients: Record<string, Room> = {}
 		methods: ['get', 'post'],
 	},
 })
-export class ServerGateway implements OnGatewayConnection {
+export class ServerGateway implements OnGatewayConnection, OnGatewayDisconnect {
 	@WebSocketServer() server: Server
 	constructor(private readonly commandBus: CommandBus) {}
+
 	async handleConnection(@ConnectedSocket() client: Socket) {
 		if (!servers[client.id]) {
 			servers[client.id] = client
 			return await this.commandBus.execute(new ConnectedCommand({ id: client.id, as: 'server' }))
+		}
+	}
+	async handleDisconnect(@ConnectedSocket() client: Socket) {
+		if (servers[client.id]) {
+			delete servers[client.id]
+			return await this.commandBus.execute(new DisconnectedCommand({ id: client.id, as: 'server' }))
 		}
 	}
 
@@ -49,7 +58,7 @@ export class ServerGateway implements OnGatewayConnection {
 		return gameEndedEvent
 	}
 	join(server: string, client: string) {
-		console.log('JOIN')
+		console.log('JOIN', Object.keys(servers), server, client)
 		servers[server].join(client)
 		const event: ConnectedEvent = {
 			id: client,
