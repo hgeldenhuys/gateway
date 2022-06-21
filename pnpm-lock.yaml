@@ -4,6 +4,8 @@ specifiers:
   '@nestjs/cli': ^8.0.0
   '@nestjs/common': ^8.0.0
   '@nestjs/core': ^8.0.0
+  '@nestjs/cqrs': ^8.0.5
+  '@nestjs/event-emitter': ^1.1.1
   '@nestjs/platform-express': ^8.0.0
   '@nestjs/platform-socket.io': ^8.4.7
   '@nestjs/schematics': ^8.0.0
@@ -35,6 +37,8 @@ specifiers:
 dependencies:
   '@nestjs/common': 8.4.7_47vcjb2de6lyibr6g4enoa5lyu
   '@nestjs/core': 8.4.7_m2cdbreoew2lfjlab4buvzgkta
+  '@nestjs/cqrs': 8.0.5_is5nhplidwfwwktrrhg7r46vx4
+  '@nestjs/event-emitter': 1.1.1_zysgbzrbqurgi5bpxpfkrj3lie
   '@nestjs/platform-express': 8.4.7_7tsmhnugyerf5okgqzer2mfqme
   '@nestjs/platform-socket.io': 8.4.7_r6nuebog4bg27giimlqlqtxmem
   '@nestjs/websockets': 8.4.7_aheyi6luzvgwkvcv7ramv2w3ee
@@ -887,6 +891,34 @@ packages:
       uuid: 8.3.2
     transitivePeerDependencies:
       - encoding
+
+  /@nestjs/cqrs/8.0.5_is5nhplidwfwwktrrhg7r46vx4:
+    resolution: {integrity: sha512-uOG7xY0e5WGEuCHKCqSsuy79i5fq6pj+zPQG/6LwpSdwHWaraIUR1N4ExAVof19AGQvDQMpCqMiTrb4O+HjlIg==}
+    peerDependencies:
+      '@nestjs/common': ^8.0.0
+      '@nestjs/core': ^8.0.0
+      reflect-metadata: 0.1.13
+      rxjs: ^7.2.0
+    dependencies:
+      '@nestjs/common': 8.4.7_47vcjb2de6lyibr6g4enoa5lyu
+      '@nestjs/core': 8.4.7_m2cdbreoew2lfjlab4buvzgkta
+      reflect-metadata: 0.1.13
+      rxjs: 7.5.5
+      uuid: 8.3.2
+    dev: false
+
+  /@nestjs/event-emitter/1.1.1_zysgbzrbqurgi5bpxpfkrj3lie:
+    resolution: {integrity: sha512-fOcV1sjOSeLA6hj7c++Ga3pZG62BcmSKn5sAE/M0fYwuKn3T3Bx9BQm9siLTRLwSY/kJjwHbhTgfnL1bfEqY3w==}
+    peerDependencies:
+      '@nestjs/common': ^7.0.0 || ^8.0.0
+      '@nestjs/core': ^7.0.0 || ^8.0.0
+      reflect-metadata: ^0.1.12
+    dependencies:
+      '@nestjs/common': 8.4.7_47vcjb2de6lyibr6g4enoa5lyu
+      '@nestjs/core': 8.4.7_m2cdbreoew2lfjlab4buvzgkta
+      eventemitter2: 6.4.5
+      reflect-metadata: 0.1.13
+    dev: false
 
   /@nestjs/platform-express/8.4.7_7tsmhnugyerf5okgqzer2mfqme:
     resolution: {integrity: sha512-lPE5Ltg2NbQGRQIwXWY+4cNrXhJdycbxFDQ8mNxSIuv+LbrJBIdEB/NONk+LLn9N/8d2+I2LsIETGQrPvsejBg==}
@@ -2391,6 +2423,10 @@ packages:
   /etag/1.8.1:
     resolution: {integrity: sha512-aIL5Fx7mawVa300al2BnEE4iNvo1qETxLrPI/o05L7z6go7fCw1J6EQmbK4FmJ2AS7kgVF/KEZWufBfdClMcPg==}
     engines: {node: '>= 0.6'}
+
+  /eventemitter2/6.4.5:
+    resolution: {integrity: sha512-bXE7Dyc1i6oQElDG0jMRZJrRAn9QR2xyyFGmBdZleNmyQX0FqGYmhZIrIrpPfm/w//LTo4tVQGOGQcGCb5q9uw==}
+    dev: false
 
   /events/3.3.0:
     resolution: {integrity: sha512-mQw+2fkQbALzQ7V0MY0IqdnXNOeTtP4r0lN9z7AAawCXgqea7bDii20AYrIBrFd/Hx0M2Ocz6S111CaFkUcb0Q==}
