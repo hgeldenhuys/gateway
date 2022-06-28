@@ -8,7 +8,7 @@ import { ServerGateway } from '../server.gateway'
 export class InputChangeCommandHandler {
 	constructor(private readonly server: ServerGateway) {}
 	async execute(command: InputChangeCommand) {
-		console.log('InputChangeCommand', command.inputChanged)
+		// console.log('InputChangeCommand', command.inputChanged)
 		this.server.send(command.inputChanged, command.id)
 		// await this.server.join(command.event)
 	}

@@ -72,6 +72,6 @@ export class ServerGateway implements OnGatewayConnection, OnGatewayDisconnect {
 	send(event: InputChangedEvent, id: string) {
 		const room = clients[id]
 		console.log('Broadcasting', id, ServerEvents.InputChanged, event)
-		this.server.in(room).emit(ServerEvents.InputChanged, event)
+		this.server.in('game').emit(ServerEvents.InputChanged, event)
 	}
 }

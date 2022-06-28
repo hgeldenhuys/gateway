@@ -30,6 +30,7 @@ export class ClientGateway implements OnGatewayConnection, OnGatewayDisconnect {
 		if (!clients[client.id]) {
 			console.log('handleConnection')
 			clients[client.id] = client
+			client.join('game')
 			return await this.commandBus.execute(new ConnectedCommand({ id: client.id, as: 'client' }))
 		}
 	}
