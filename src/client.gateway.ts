@@ -17,7 +17,7 @@ import { DisconnectedCommand } from './commands/disconnected-command'
 const clients: Record<string, Socket> = {}
 
 @WebSocketGateway({
-	namespace: 'game',
+	namespace: 'client',
 	cors: {
 		origin: '*',
 		methods: ['get', 'post'],

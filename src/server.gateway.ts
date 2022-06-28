@@ -39,6 +39,7 @@ export class ServerGateway implements OnGatewayConnection, OnGatewayDisconnect {
 	async handleConnection(@ConnectedSocket() client: Socket) {
 		if (!servers[client.id]) {
 			servers[client.id] = client
+			client.join('game')
 			return await this.commandBus.execute(new ConnectedCommand({ id: client.id, as: 'server' }))
 		}
 	}
@@ -72,6 +73,7 @@ export class ServerGateway implements OnGatewayConnection, OnGatewayDisconnect {
 	send(event: InputChangedEvent, id: string) {
 		const room = clients[id]
 		console.log('Broadcasting', id, ServerEvents.InputChanged, event)
+		this.server.in('room').emit(ServerEvents.InputChanged, event)
 		this.server.in('game').emit(ServerEvents.InputChanged, event)
 	}
 }
